@@ -2,10 +2,10 @@ from graphics import *
 
 def main():
     win = Window(800, 600)
-    line_1 = Line(Point(10,10), Point(50,10))
-    line_2 = Line(Point(50,10), Point(500,10))
-    win.draw_line(line_1, "red")   
-    win.draw_line(line_2, "black")   
+    cell = Cell(30, 50, 50, 70, win, has_top_wall=False, has_bottom_wall=False)
+    cell.draw("black")
+    cell = Cell(80,100, 110, 130, win, has_left_wall=False, has_right_wall=False)
+    cell.draw("black")
     win.wait_for_close()
 
 

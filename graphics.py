@@ -49,7 +49,7 @@ class Line:
 
 
 class Cell:
-    def __init__(self,x1, x2, y1, y2,
+    def __init__(self,x1, y1, x2, y2, win,
                  has_left_wall=True, 
                  has_right_wall=True,
                  has_top_wall=True,
@@ -63,4 +63,54 @@ class Cell:
         self._x2 = x2
         self._y1 = y1
         self._y2 = y2
+        self._win = win
 
+         
+    def draw(self, fill_color):
+        y_offset = self._y2 - self._y1
+        x_offset = self._x2 - self._x1 
+
+        if self.has_left_wall:
+            self._win.canvas.create_line(
+                self._x1, 
+                self._y1, 
+                self._x2 - x_offset, 
+                self._y2, 
+                fill=fill_color,
+                width=2
+            )
+
+
+        if self.has_right_wall:
+            self._win.canvas.create_line(
+                self._x1 + x_offset, 
+                self._y1, 
+                self._x2, 
+                self._y2, 
+                fill=fill_color,
+                width=2
+            )
+
+
+        if self.has_top_wall:
+            self._win.canvas.create_line(
+                self._x1, 
+                self._y1, 
+                self._x2, 
+                self._y2 - y_offset, 
+                fill=fill_color,
+                width=2
+            )
+
+
+        if self.has_bottom_wall:
+            self._win.canvas.create_line(
+                self._x1, 
+                self._y1 + x_offset, 
+                self._x2, 
+                self._y2, 
+                fill=fill_color,
+                width=2
+            )
+
+        self._win.canvas.pack(fill=BOTH, expand=True)
