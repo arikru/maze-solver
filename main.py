@@ -2,8 +2,8 @@ from graphics import *
 
 def main():
     win = Window(800, 600)
-    cell = Cell(Point(30,40), Point(50,80), win)
-    cell.draw("black")
+    cell = Cell(win)
+    cell.draw(10, 10, 20, 50)
     win.wait_for_close()
 
 
