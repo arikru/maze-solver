@@ -89,5 +89,9 @@ class Cell:
         else:
             fill_color = "gray"
 
+        c1 = Point((self._x2 + self._x1) / 2, (self._y2 + self._y1) / 2)
+        c2 = Point((to_cell._x2 + to_cell._x1) / 2, (to_cell._y2 + to_cell._y1) / 2)
 
+        line = Line(c1, c2)
+        self._win.draw_line(line, fill_color=fill_color)
 
