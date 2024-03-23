@@ -49,7 +49,7 @@ class Line:
 
 
 class Cell:
-    def __init__(self,x1, y1, x2, y2, win,
+    def __init__(self,up_left, down_right, win,
                  has_left_wall=True, 
                  has_right_wall=True,
                  has_top_wall=True,
@@ -59,10 +59,10 @@ class Cell:
         self.has_right_wall = has_right_wall
         self.has_top_wall = has_top_wall
         self.has_bottom_wall = has_bottom_wall
-        self._x1 = x1 
-        self._x2 = x2
-        self._y1 = y1
-        self._y2 = y2
+        self._x1 = up_left.x
+        self._y1 = up_left.y
+        self._x2 = down_right.x
+        self._y2 = down_right.y
         self._win = win
 
          
@@ -74,39 +74,36 @@ class Cell:
             self._win.canvas.create_line(
                 self._x1, 
                 self._y1, 
-                self._x2 - x_offset, 
+                self._x1, 
                 self._y2, 
                 fill=fill_color,
                 width=2
             )
 
-
         if self.has_right_wall:
             self._win.canvas.create_line(
-                self._x1 + x_offset, 
+                self._x2, 
                 self._y1, 
                 self._x2, 
                 self._y2, 
                 fill=fill_color,
                 width=2
             )
-
 
         if self.has_top_wall:
             self._win.canvas.create_line(
                 self._x1, 
                 self._y1, 
                 self._x2, 
-                self._y2 - y_offset, 
+                self._y1, 
                 fill=fill_color,
                 width=2
             )
 
-
         if self.has_bottom_wall:
             self._win.canvas.create_line(
                 self._x1, 
-                self._y1 + x_offset, 
+                self._y2, 
                 self._x2, 
                 self._y2, 
                 fill=fill_color,
@@ -114,3 +111,6 @@ class Cell:
             )
 
         self._win.canvas.pack(fill=BOTH, expand=True)
+
+    def draw_move(self, to_cell, undo=False):
+            pass
