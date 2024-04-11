@@ -1,5 +1,6 @@
 import unittest
 from maze import Maze
+import time
 
 class Tests(unittest.TestCase):
     def test_maze_create_cells(self):
@@ -15,16 +16,20 @@ class Tests(unittest.TestCase):
             num_rows,
         )
     def test_maze_create_cells_null(self):
-        num_cols = 1
+        num_cols = 0
         num_rows = 0
         m1 = Maze(0, 0, num_rows, num_cols, 10, 10)
+
         self.assertEqual(
-            len(m1._cells),
-            num_cols,
+            m1.valid,
+            False,
         )
+
+    def test_entrance_wall_broken(self):
+        m1 = Maze(0, 0, 10, 10, 10, 10)
         self.assertEqual(
-            len(m1._cells[0]),
-            num_rows,
+            m1._cells[0][0].has_top_wall,
+            False,
         )
 
 if __name__ == "__main__":
