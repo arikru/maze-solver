@@ -65,7 +65,7 @@ class Maze:
             return
         
         self.win.redraw()
-        time.sleep(0.005)
+        time.sleep(0.02)
 
     def _break_entrance_and_exit(self):
         print("Create entry and exit ...")
@@ -77,20 +77,51 @@ class Maze:
         print("Finished entry and exit.")
 
     def break_walls_r(self, i, j):
-        cells_to_visit = []
+        print(f"Enter Cell {i}, {j}")
+        self._cells[i][j].visited = True
 
-        if (i - 1) in list(range(self.num_cols)):
-            if not self._cells[i-1][j].visited:
-                print("Left direction available")
+        while True:
+            cells_to_visit = []
 
-        if (i + 1) in list(range(self.num_cols)):
-            if not self._cells[i+1][j].visited:
-                print("Right direction available")
+            if (i - 1) in list(range(self.num_cols)):
+                if not self._cells[i-1][j].visited:
+                    print("Left direction available")
+                    cells_to_visit.append((i - 1, j))
 
-        if (j - 1) in list(range(self.num_rows)):
-            if not self._cells[i][j-1].visited:
-                print("Up direction available")
+            if (i + 1) in list(range(self.num_cols)):
+                if not self._cells[i+1][j].visited:
+                    print("Right direction available")
+                    cells_to_visit.append((i + 1, j))
 
-        if (j + 1) in list(range(self.num_rows)):
-            if not self._cells[i][j+1].visited:
-                print("Down direction available")
+            if (j - 1) in list(range(self.num_rows)):
+                if not self._cells[i][j-1].visited:
+                    print("Up direction available")
+                    cells_to_visit.append((i, j - 1))
+
+            if (j + 1) in list(range(self.num_rows)):
+                if not self._cells[i][j+1].visited:
+                    print("Down direction available")
+                    cells_to_visit.append((i, j + 1))
+
+            print(cells_to_visit)
+
+            if not cells_to_visit:
+                self._draw_cell(i, j)
+                return
+
+            i_next, j_next = random.choice(cells_to_visit)
+            print(f"Knock down walls to Cell {i_next}, {j_next}")
+            if i_next < i:
+                self._cells[i][j].has_left_wall = False
+                self._cells[i-1][j].has_right_wall = False
+            elif i_next > i:
+                self._cells[i][j].has_right_wall = False
+                self._cells[i+1][j].has_left_wall = False
+            if j_next < j:
+                self._cells[i][j].has_top_wall = False
+                self._cells[i][j-1].has_bottom_wall = False
+            elif j_next > j:
+                self._cells[i][j].has_bottom_wall = False
+                self._cells[i][j+1].has_top_wall = False
+
+            self.break_walls_r(i_next, j_next)

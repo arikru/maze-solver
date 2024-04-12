@@ -12,7 +12,7 @@ def main():
     win = Window(screen_x, screen_y)
 
     maze = Maze(margin, margin, num_rows, num_cols, cell_size_x, cell_size_y, win, seed=42)
-    maze.break_walls_r(12, 5)
+    maze.break_walls_r(0, 0)
 
     win.wait_for_close()
     
