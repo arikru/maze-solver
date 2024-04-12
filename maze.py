@@ -1,5 +1,6 @@
 from graphics import Cell
 import time
+import random
 
 class Maze:
     def __init__(
@@ -10,7 +11,8 @@ class Maze:
         num_cols,
         cell_size_x,
         cell_size_y,
-        win=None,
+        win = None,
+        seed = None,
     ):
         self.x1 = x1
         self.y1 = y1
@@ -20,6 +22,9 @@ class Maze:
         self.cell_size_y = cell_size_y
         self.win = win
         self._cells = []
+
+        if seed is not None:
+            random.seed(seed)
 
         if self.num_rows == 0 or self.num_cols == 0:
             self.valid = False
@@ -60,7 +65,7 @@ class Maze:
             return
         
         self.win.redraw()
-        time.sleep(0.01)
+        time.sleep(0.005)
 
     def _break_entrance_and_exit(self):
         print("Create entry and exit ...")
@@ -70,3 +75,22 @@ class Maze:
         self._cells[self.num_cols - 1][self.num_rows - 1].has_bottom_wall = False
         self._draw_cell(self.num_cols - 1, self.num_rows - 1)
         print("Finished entry and exit.")
+
+    def break_walls_r(self, i, j):
+        cells_to_visit = []
+
+        if (i - 1) in list(range(self.num_cols)):
+            if not self._cells[i-1][j].visited:
+                print("Left direction available")
+
+        if (i + 1) in list(range(self.num_cols)):
+            if not self._cells[i+1][j].visited:
+                print("Right direction available")
+
+        if (j - 1) in list(range(self.num_rows)):
+            if not self._cells[i][j-1].visited:
+                print("Up direction available")
+
+        if (j + 1) in list(range(self.num_rows)):
+            if not self._cells[i][j+1].visited:
+                print("Down direction available")
