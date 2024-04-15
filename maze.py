@@ -127,8 +127,62 @@ class Maze:
                 self._cells[i][j+1].has_top_wall = False
 
             self.break_walls_r(i_next, j_next)
-            
+
     def _reset_cells_visited(self):
         for i in range(self.num_cols):
             for j in range(self.num_rows):
                 self._cells[i][j].visited = False
+
+    def solve(self):
+        return self._solve_r(i=0, j=0)
+
+    def _solve_r(self, i, j):
+        self._animate()
+
+        current_cell = self._cells[i][j]
+        current_cell.visited = True
+
+        if current_cell is self._cells[self.num_cols - 1][self.num_rows - 1]:
+            return True
+
+        if (i - 1) in list(range(self.num_cols)):
+            if not self._cells[i-1][j].visited and not current_cell.has_left_wall:
+                print("Left direction available")
+                current_cell.draw_move(self._cells[i-1][j])
+                solved = self._solve_r(i-1, j)
+                if solved:
+                    return True
+                else:
+                    current_cell.draw_move(self._cells[i-1][j], undo = True)
+
+        if (i + 1) in list(range(self.num_cols)):
+            if not self._cells[i+1][j].visited and not current_cell.has_right_wall:
+                print("Right direction available")
+                current_cell.draw_move(self._cells[i+1][j])
+                solved = self._solve_r(i+1, j)
+                if solved:
+                    return True
+                else:
+                    current_cell.draw_move(self._cells[i+1][j], undo = True)
+
+        if (j - 1) in list(range(self.num_rows)):
+            if not self._cells[i][j-1].visited and not current_cell.has_top_wall:
+                print("Up direction available")
+                current_cell.draw_move(self._cells[i][j-1])
+                solved = self._solve_r(i, j-1)
+                if solved:
+                    return True
+                else:
+                    current_cell.draw_move(self._cells[i][j-1], undo = True)
+
+        if (j + 1) in list(range(self.num_rows)):
+            if not self._cells[i][j+1].visited and not current_cell.has_bottom_wall:
+                print("Down direction available")
+                current_cell.draw_move(self._cells[i][j+1])
+                solved = self._solve_r(i, j+1)
+                if solved:
+                    return True
+                else:
+                    current_cell.draw_move(self._cells[i][j+1], undo = True)
+
+        return False

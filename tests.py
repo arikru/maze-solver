@@ -45,5 +45,12 @@ class Tests(unittest.TestCase):
             False
         )
 
+    def test__solve_r_end(self):
+        m1 = Maze(0, 0, 10, 16, 10, 10)
+        self.assertEqual(
+            m1._solve_r(15,9),
+            True
+        )
+
 if __name__ == "__main__":
     unittest.main()
