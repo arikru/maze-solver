@@ -2,9 +2,9 @@ from graphics import *
 from maze import Maze
 
 def main():
-    num_rows = 10
-    num_cols = 16
-    margin = 50
+    num_rows = 32
+    num_cols = 32
+    margin = 10
     screen_x = 800
     screen_y = 600
     cell_size_x = (screen_x - 2 * margin) / num_cols
